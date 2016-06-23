@@ -15,18 +15,18 @@ class Welcome extends CI_Controller {
                                   v.location_lon,
 				v.teilnehmer_sc + v.teilnehmer_nsc AS max_teilnehmer,
                                   v.teilnehmer_sc,
-                                  v.teilnehmer_nsc,                                                     
-                                  (SELECT count(name) FROM teilnehmer WHERE 
+                                  v.teilnehmer_nsc,
+                                  (SELECT count(name) FROM teilnehmer WHERE
                                                                         veranstaltung_id = v.id
                                                                       AND
                                                                         sc = false) AS angemeldet_nsc,
                                   (SELECT count(name) FROM teilnehmer WHERE
                                                                         veranstaltung_id = v.id
                                                                       AND
-                                                                        sc = true) AS angemeldet_sc, 
+                                                                        sc = true) AS angemeldet_sc,
                                   v.preis,
                                   v.start_datum,
-                                  v.flag_anmeldung_moeglich 
+                                  v.flag_anmeldung_moeglich
                                FROM
                                   veranstaltung v
                                WHERE
@@ -34,15 +34,15 @@ class Welcome extends CI_Controller {
                                ORDER BY v.id DESC
                                LIMIT 1');
 
-	$r = $q->row_array();		
+	$r = $q->row_array();
 	if(!empty($r)){
-		
+
 		$r['angemeldete_teilnehmer'] = $r['angemeldet_sc']+$r['angemeldet_nsc'];
 		$q = $this->db->query("SELECT * FROM preis WHERE veranstaltung_id = ".$r['id']."");
 		$r['preis'] = $q->result_array();
 		if(!empty($r['preis'])){
 			foreach($r['preis'] as &$preisstaffel){
-			  
+
 				$datum = explode('-', $preisstaffel['datum']);
 				$preisstaffel['datum'] = $datum[2].".".$datum[1].".".$datum[0];
 			}
@@ -63,15 +63,15 @@ class Welcome extends CI_Controller {
         $this->load->library('parser');
         $this->load->library('session');
         $this->load->library('form_validation');
-   
+
         // Aussehen der Fehlermeldungen festlegen
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" style="padding:10px;margin-bottom:5px"><span class="glyphicon glyphicon-exclamation-sign"></span>&nbsp;', '</div>');
-    
+
         // Daten aus der DB ranholen
         $r = $this->getData();
 
         $parse = "";
-        // Wenn eine aktive Veranstaltung in der DB gefunden wurde, kommt diese zur Anzeige    
+        // Wenn eine aktive Veranstaltung in der DB gefunden wurde, kommt diese zur Anzeige
         if(!empty($r)){
 
             $parseForm = "";
@@ -79,7 +79,7 @@ class Welcome extends CI_Controller {
             //  Nach dem Neu-Laden der Seite geht's definitiv ins else!
             if($this->session->userdata('gerade_angemeldet')){
                 $parseForm = $this->doSuccessMsg($r);
-            }else{        
+            }else{
                 // Nur wenn die Anmeldung freigeschaltet ist, gehts hier weiter
                 if($r['flag_anmeldung_moeglich']){
                     // Sollte die Veranstaltung ausgebucht sein, wird das entsprechend angezeigt
@@ -89,17 +89,17 @@ class Welcome extends CI_Controller {
                                       </div>';
                     // Falls nicht, kommt das normale Formular zur Anzeige
                     }else{
-                        
+
                         $this->load->helper('captcha');
-                        
+
                         $c = create_captcha(array('word'	=> 'Random word',
                                                   'img_path'	=> './captcha/',
                                                   'img_url'	=> base_url('captcha'),
                                                   'img_width'	=> '150',
                                                   'img_height' => 30,
                                                   'expiration' => 7200));
-                        
-                        // Festlegen der Regeln zur Formularvalidierung    
+
+                        // Festlegen der Regeln zur Formularvalidierung
                         $this->form_validation->set_rules('name', 'Vor- und Nachname', 'trim|min_length[5]|required');
                         $this->form_validation->set_rules('email', 'E-Mail Adresse', 'trim|valid_email|required');
                         $this->form_validation->set_rules('email2', 'E-Mail Adresse wiederholen', 'trim|required|matches[email]');
@@ -113,14 +113,14 @@ class Welcome extends CI_Controller {
                         $this->form_validation->set_rules('agb', 'AGBs gelesen und akzeptiert', 'required');
 								$this->form_validation->set_rules('g-recaptcha-response', 'Captcha', 'captcha');
 
-								$sErrorMsg = ''; 
+								$sErrorMsg = '';
 								if($this->input->post('submit') && !$this->input->post('g-recaptcha-response')){
 									$sErrorMsg.= '<div class="alert alert-danger" style="padding:10px;margin-bottom:5px">
 													  		<span class="glyphicon glyphicon-exclamation-sign"></span>&nbsp;
-													  		Bitte beweise, dass Du <b>kein</b> Bot bist!		
+													  		Bitte beweise, dass Du <b>kein</b> Bot bist!
 													  </div>';
 								}
- 
+
                         if($this->form_validation->run()){
                             if(intval($this->input->post('chkNSC')) == 1){
                                 $isSC = 1;
@@ -136,23 +136,23 @@ class Welcome extends CI_Controller {
 								     'sonstiges' => $this->input->post('sonstiges'),
 								     'geburtsdatum' => '2015-12-15',
                                                                      'sc' => $isSC,
-                                                                     'name' => $this->input->post('name')))){                                        
+                                                                     'name' => $this->input->post('name')))){
                                // Ist das Speichen in der DB erfolgreich, wird vor�bergehend in die Session geschrieben, dass gerade
                                // eine Anmeldung stattgefunden hat. Danach erfolgt eine Weiterleitung um den Formular-Cache des Browsers
                                // zu leeren (wegen Mehrfachsubmit via Refresh)
                                $this->session->set_userdata('gerade_angemeldet', true);
-                               redirect(site_url(), 'location');                                                          
+                               redirect(site_url(), 'location');
                             }
-                        } 
-                        
-                        $parseForm = $this->parser->parse('view_form_anmeldung', array('errorMsg' => $sErrorMsg), true);               
+                        }
+
+                        $parseForm = $this->parser->parse('view_form_anmeldung', array('errorMsg' => $sErrorMsg), true);
                     }
                 }else{
                   // Ist die Anmeldung NICHT freigeschaltet, kommt diese Meldung!
                   $parseForm = '<div style="margin-top:20px" class="alert alert-info" role="alert">Die Anmeldung f&uuml;r diese Veranstaltung ist <b>noch nicht</b> m&ouml;glich. Bitte schaue zu einem sp&auml;teren Zeitpunkt nochmal vorbei.</div>';
                 }
             }
-        
+
             $sc = 0;
             $nsc = 0;
             // Nur wenn mindestens eine Person angemeldet ist, weil sonst Division durch 0
@@ -162,7 +162,7 @@ class Welcome extends CI_Controller {
               $nsc = (intval($r['angemeldete_teilnehmer'])-intval($r['anteil_sc']))/intval($r['angemeldete_teilnehmer'])*100;
             }
              */
-            
+
             if(intval($r['angemeldet_nsc']) >= 0){
                 $nsc = intval($r['angemeldet_nsc'])/intval($r['teilnehmer_nsc'])*100;
             }
@@ -176,24 +176,24 @@ class Welcome extends CI_Controller {
                                                                       'angemeldet_nsc' => $r['angemeldet_nsc'],
                                                                       'teilnehmer_sc' => $r['teilnehmer_sc'],
                                                                       'teilnehmer_nsc' => $r['teilnehmer_nsc'],
-                                                                      'preis' => $r['preis'] ,                                                          
+                                                                      'preis' => $r['preis'] ,
                                                                       //'anmeldungen_prozent' => intval($r['angemeldete_teilnehmer'])/intval($r['max_teilnehmer'])*100,
-                                                                      //'anteil_sc' => $sc,
+                                                                      'anteil_sc' => $sc,
                                                                       'anteil_nsc' => $nsc,
-                                                                      'start_datum' => date('d.m.Y H:i', mysql_to_unix($r['start_datum'])),  
+                                                                      'start_datum' => date('d.m.Y H:i', mysql_to_unix($r['start_datum'])),
                                                                       'anmeldung' => $parseForm), true);
-    
+
         }else{
             // Sollte in Zukunft keine Veranstaltung anliegen, kommt eine entsprechende Meldung, sonst nix :)
-            $parse = $this->parser->parse('view_keine_veranstaltung', array(), true);  
+            $parse = $this->parser->parse('view_keine_veranstaltung', array(), true);
         }
-    
+
         $this->parser->parse('welcome_message', array('content' => $parse));
     }
-    
-    
+
+
     private function doSuccessMsg(&$r){
-        $this->session->unset_userdata('gerade_angemeldet');        
+        $this->session->unset_userdata('gerade_angemeldet');
         return '<div class="alert alert-success" role="alert" style="margin-top:20px">
             <p>
               <b>Erfolg!</b> Du bist jetzt zur Veranstaltung <i>\''.$r['titel'].'\'</i> angemeldet. Danke f&uuml;r dein Vertrauen und viel Spa&szlig;!
@@ -202,11 +202,11 @@ class Welcome extends CI_Controller {
               In den kommenden Tagen erh&auml;lst du von uns eine E-Mail mit weiteren Informationen.
             </p>
           </div>
-          <a href="'.site_url().'"><button class="btn-link">Noch jemanden anmelden</button></a>'; 
+          <a href="'.site_url().'"><button class="btn-link">Noch jemanden anmelden</button></a>';
     }
-  
-          
-        
+
+
+
 }
 
 function captcha($s){
@@ -217,15 +217,15 @@ function captcha($s){
    curl_setopt($c, CURLOPT_POSTFIELDS, 'secret=6LcSKRgTAAAAADK_RTF7wUBuGtEuMikFbq1pmlh7&response='.$s.'&remoteip='.$_SERVER['REMOTE_ADDR']);
 	curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
 
-	$response = curl_exec($c);   
-   
+	$response = curl_exec($c);
+
    $oreturn = json_decode($response);
-	
-	return $oreturn->success;   
+
+	return $oreturn->success;
 
 }
 
 function valid_date($s){
     $a = explode('.', $s);
-    return checkdate($a[1], $a[0], $a[2]);  
+    return checkdate($a[1], $a[0], $a[2]);
 }

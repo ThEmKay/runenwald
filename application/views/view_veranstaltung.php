@@ -5,13 +5,18 @@
    <p>
       <b>{angemeldet_sc}</b> Spieler-Charaktere angemeldet.
    </p>
+    <div class="progress" style="background-color:#D3D3D3">
+      <div class="progress-bar progress-bar-warning" role="progressbar" style="width:{anteil_sc}%;">
+        &nbsp;
+      </div>
+    </div>
    <p>
        <b>{angemeldet_nsc}</b> von max. <b>{teilnehmer_nsc}</b> Nicht-Spieler-Charakteren angemeldet.
    </p>
     <div class="progress" style="background-color:#D3D3D3">
       <div class="progress-bar progress-bar-warning" role="progressbar" style="width:{anteil_nsc}%;">
         &nbsp;
-      </div>            
+      </div>
     </div>
    <ul style="padding:0;margin:0;list-style-type:none;font-size:1.5em">
       <li style="margin-bottom:5px">
@@ -29,7 +34,7 @@
 	  </tr>
           {/preis}
 	</table>
-      </li>      
+      </li>
       <li style="margin-bottom:5px">
         <span class="glyphicon glyphicon-calendar"></span> {start_datum}
       </li>
@@ -41,7 +46,7 @@
             attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
         L.marker([{lat}, {lon}]).addTo(map).bindPopup('{location_name}').openPopup();
-    </script>   
+    </script>
  </div>
  <div class="col-md-6" style="border-left: 1px solid #999;min-height:650px">
     {anmeldung}
