@@ -65,6 +65,15 @@ class Welcome extends CI_Controller {
         $this->load->library('session');
         $this->load->library('form_validation');
 
+
+ $this->load->library('email');
+							   $this->email->from('noreply@runenwald.de', 'Runenwald Orga');
+							   $this->email->to('sebkoine@gmail.com');
+							   $this->email->subject('Email Test');
+							   $this->email->message('Testing the email class.');
+							   $this->email->send();
+
+
         // Aussehen der Fehlermeldungen festlegen
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" style="padding:10px;margin-bottom:5px"><span class="glyphicon glyphicon-exclamation-sign"></span>&nbsp;', '</div>');
 
@@ -135,13 +144,14 @@ class Welcome extends CI_Controller {
 								     'plz' => $this->input->post('plz'),
 								     'ort' => $this->input->post('ort'),
 								     'sonstiges' => $this->input->post('sonstiges'),
-								     'geburtsdatum' => '2015-12-15',
+								     'geburtsdatum' => $this->input->post('geburtsdatum'),
                                                                      'sc' => $isSC,
                                                                      'name' => $this->input->post('name')))){
                                // Ist das Speichen in der DB erfolgreich, wird vor�bergehend in die Session geschrieben, dass gerade
                                // eine Anmeldung stattgefunden hat. Danach erfolgt eine Weiterleitung um den Formular-Cache des Browsers
                                // zu leeren (wegen Mehrfachsubmit via Refresh)
                                $this->session->set_userdata('gerade_angemeldet', true);
+
                                redirect(site_url(), 'location');
                             }
                         }

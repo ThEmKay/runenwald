@@ -22,7 +22,7 @@
       <li style="margin-bottom:5px">
 	<table style="width:100%":>
 	  <tr>
-	    <th>Datum</th>
+	    <th>Bis</th>
 	    <th>Preis SC</th>
    	    <th>Preis NSC</th>
 	  </tr>
