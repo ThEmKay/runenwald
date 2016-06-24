@@ -147,17 +147,19 @@ class Welcome extends CI_Controller {
                                $this->session->set_userdata('gerade_angemeldet', true);
 
 
+								$isSC == 1 ? $spielertyp = 'SC' : $spielertyp = 'NSC';
+								$isSC == 1 ? $spielerpreis = 45 : $spielerpreis = 30;
+
 								$config['mailtype'] = 'html';
 								$this->email->initialize($config);							   
 							   $this->email->from('noreply@runenwald.de', 'Runenwald Orga');
 							   $this->email->to($this->input->post('email'));
 							   $this->email->subject('Anmeldungsbestätigung');
 							   $this->email->message('<h3>Hallo '.$this->input->post('name').',</h3>
-
 															  <p>hiermit bestätigen wir Deine Anmeldung zu unserer Veranstaltung <b>'. $r['titel'].'</b> am
-															  		<b>'.date('d.m.Y', mysql_to_unix($r['start_datum'])).'</b> als <i>'.$isSC == 1 ? 'SC' : 'NSC'.'</i> und bitten Dich, den Betrag von <b>100000 &euro;</b> schnellstmöglich auf folgendes Konto zu überweisen:
+															  		<b>'.date('d.m.Y', mysql_to_unix($r['start_datum'])).'</b> als <i>'.$spielertyp.'</i> und bitten Dich, den '.$spielerpreis.'&euro; schnellstmöglich auf folgendes Konto zu überweisen:
 															  </p>
-
+															  <p><b>ACHTUNG: Die Höhe des Staffelpreises richtet sich nach dem Datum des Geldeingangs. Eventuell musst du etwas nachbezahlen!</b></p>
 															  <p>Inhaber: Karina Bley</p>
 															  <p>Kontonummer: 1050069010</p>
 															  <p>BLZ: 12030000</p>
@@ -235,7 +237,8 @@ class Welcome extends CI_Controller {
               <b>Erfolg!</b> Du bist jetzt zur Veranstaltung <i>\''.$r['titel'].'\'</i> angemeldet. Danke f&uuml;r dein Vertrauen und viel Spa&szlig;!
             </p>
             <p>
-              In den kommenden Tagen erh&auml;lst du von uns eine E-Mail mit weiteren Informationen.
+              In wenigen Minuten erh&auml;lst du von uns eine E-Mail mit weiteren Informationen. <b>BITTE SIEH AUCH IN DEINEM
+              SPAM-ORDNER NACH</b>
             </p>
           </div>
           <a href="'.site_url().'"><button class="btn-link">Noch jemanden anmelden</button></a>';
