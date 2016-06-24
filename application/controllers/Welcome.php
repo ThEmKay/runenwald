@@ -12,8 +12,9 @@ class Welcome extends CI_Controller {
                                   v.titel,
                                   v.location_name,
                                   v.location_lat,
+                                  v.con_zahler,
                                   v.location_lon,
-				v.teilnehmer_sc + v.teilnehmer_nsc AS max_teilnehmer,
+								  v.teilnehmer_sc + v.teilnehmer_nsc AS max_teilnehmer,
                                   v.teilnehmer_sc,
                                   v.teilnehmer_nsc,
                                   (SELECT count(name) FROM teilnehmer WHERE
