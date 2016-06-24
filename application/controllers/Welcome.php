@@ -176,6 +176,7 @@ class Welcome extends CI_Controller {
                                                                       'angemeldet_nsc' => $r['angemeldet_nsc'],
                                                                       'teilnehmer_sc' => $r['teilnehmer_sc'],
                                                                       'teilnehmer_nsc' => $r['teilnehmer_nsc'],
+                                                                      'con_zahler' => $r['con_zahler'],
                                                                       'preis' => $r['preis'] ,
                                                                       //'anmeldungen_prozent' => intval($r['angemeldete_teilnehmer'])/intval($r['max_teilnehmer'])*100,
                                                                       'anteil_sc' => $sc,

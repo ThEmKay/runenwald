@@ -32,7 +32,15 @@
   	    <td>{preis_sc} &euro;</td>
   	    <td>{preis_nsc} &euro;</td>
 	  </tr>
-          {/preis}
+      {/preis}
+      <tr>
+      	<th colspan="2">
+      		Con-Zahler Zuschlag
+      	</th>
+      	<td>
+      		{con_zahler} &euro;
+      	</td>
+      </tr>
 	</table>
       </li>
       <li style="margin-bottom:5px">
