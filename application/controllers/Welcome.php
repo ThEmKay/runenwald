@@ -64,35 +64,8 @@ class Welcome extends CI_Controller {
         $this->load->library('parser');
         $this->load->library('session');
         $this->load->library('form_validation');
-
-
- 		$this->load->library('email');
+        $this->load->library('email');
 							   
-							   $config['mailtype'] = 'html';
-								$this->email->initialize($config);							   
-							   $this->email->from('noreply@runenwald.de', 'Runenwald Orga');
-							   $this->email->to('markus93.weller@gmail.com');
-							   $this->email->subject('Anmeldungsbestätigung');
-							   $this->email->message('<h3>Hallo [Vorname],</h3>
-
-															  <p>hiermit bestätigen wir Deine Anmeldung zu unserer Veranstaltung <b>[Veranstaltungsname]</b> am <b>[Veranstaltungsdatum]</b> als <i>[SC/NSC]</i> und bitten Dich, den Betrag von <b>[aktueller Staffelpreis]</b> schnellstmöglich auf folgendes Konto zu überweisen:
-															  </p>
-
-															  <p>Inhaber: Karina Bley</p>
-															  <p>Kontonummer: 1050069010</p>
-															  <p>BLZ: 12030000</p>
-															  <p>Deutsche Kreditbank AG</p>
- 															  <p>IBAN: DE79 120300001050069010</p>
-															  <p>BIC: BYLADEM1001</p>
-															  <br />
-															  <p>Du wirst noch einmal von uns informiert, sobald dein Geld eingetroffen ist.</p>
-															  <br />
-															  <br />
-															  <br />
-															  <p>Viele Grüße</p>
-															  <br />
-															  <p>Die Runenwald-Orga</p>');
-							   $this->email->send();
 
 
         // Aussehen der Fehlermeldungen festlegen
@@ -166,12 +139,44 @@ class Welcome extends CI_Controller {
 								     'ort' => $this->input->post('ort'),
 								     'sonstiges' => $this->input->post('sonstiges'),
 								     'geburtsdatum' => $this->input->post('geburtsdatum'),
-                                                                     'sc' => $isSC,
-                                                                     'name' => $this->input->post('name')))){
+                             'sc' => $isSC,
+                             'name' => $this->input->post('name')))){
                                // Ist das Speichen in der DB erfolgreich, wird vor�bergehend in die Session geschrieben, dass gerade
                                // eine Anmeldung stattgefunden hat. Danach erfolgt eine Weiterleitung um den Formular-Cache des Browsers
                                // zu leeren (wegen Mehrfachsubmit via Refresh)
                                $this->session->set_userdata('gerade_angemeldet', true);
+
+
+								$config['mailtype'] = 'html';
+								$this->email->initialize($config);							   
+							   $this->email->from('noreply@runenwald.de', 'Runenwald Orga');
+							   $this->email->to($this->input->post('email'));
+							   $this->email->subject('Anmeldungsbestätigung');
+							   $this->email->message('<h3>Hallo '.$this->input->post('name').',</h3>
+
+															  <p>hiermit bestätigen wir Deine Anmeldung zu unserer Veranstaltung <b>'. $r['titel'].'</b> am
+															  		<b>'.date('d.m.Y', mysql_to_unix($r['start_datum'])),.'</b> als <i>'.$isSC == 1 ? 'SC' : 'NSC'.'</i> und bitten Dich, den Betrag von <b>100000 &euro;</b> schnellstmöglich auf folgendes Konto zu überweisen:
+															  </p>
+
+															  <p>Inhaber: Karina Bley</p>
+															  <p>Kontonummer: 1050069010</p>
+															  <p>BLZ: 12030000</p>
+															  <p>Deutsche Kreditbank AG</p>
+ 															  <p>IBAN: DE79 120300001050069010</p>
+															  <p>BIC: BYLADEM1001</p>
+															  <br />
+															  <p>Du wirst noch einmal von uns informiert, sobald dein Geld eingetroffen ist.</p>
+															  <br />
+															  <br />
+															  <br />
+															  <p>Viele Grüße</p>
+															  <br />
+															  <p>Die Runenwald-Orga</p>');
+							   $this->email->send();
+
+
+
+
 
                                redirect(site_url(), 'location');
                             }
@@ -188,12 +193,10 @@ class Welcome extends CI_Controller {
             $sc = 0;
             $nsc = 0;
             // Nur wenn mindestens eine Person angemeldet ist, weil sonst Division durch 0
-            /*
-            if(intval($r['angemeldete_teilnehmer']) != 0){
-              $sc = intval($r['anteil_sc'])/intval($r['angemeldete_teilnehmer'])*100;
-              $nsc = (intval($r['angemeldete_teilnehmer'])-intval($r['anteil_sc']))/intval($r['angemeldete_teilnehmer'])*100;
+            
+            if(intval($r['angemeldet_sc']) != 0){
+              $sc = intval($r['angemeldet_sc'])/intval($r['teilnehmer_sc'])*100;
             }
-             */
 
             if(intval($r['angemeldet_nsc']) >= 0){
                 $nsc = intval($r['angemeldet_nsc'])/intval($r['teilnehmer_nsc'])*100;

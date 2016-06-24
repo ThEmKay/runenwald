@@ -67,10 +67,12 @@ class Welcome extends CI_Controller {
 
 
  		$this->load->library('email');
+							   
+							   $config['mailtype'] = 'html';
+								$this->email->initialize($config);							   
 							   $this->email->from('noreply@runenwald.de', 'Runenwald Orga');
 							   $this->email->to('markus93.weller@gmail.com');
 							   $this->email->subject('Anmeldungsbestätigung');
-							   $this->email->mailtype('html');
 							   $this->email->message('<h3>Hallo [Vorname],</h3>
 
 															  <p>hiermit bestätigen wir Deine Anmeldung zu unserer Veranstaltung <b>[Veranstaltungsname]</b> am <b>[Veranstaltungsdatum]</b> als <i>[SC/NSC]</i> und bitten Dich, den Betrag von <b>[aktueller Staffelpreis]</b> schnellstmöglich auf folgendes Konto zu überweisen:
@@ -186,12 +188,10 @@ class Welcome extends CI_Controller {
             $sc = 0;
             $nsc = 0;
             // Nur wenn mindestens eine Person angemeldet ist, weil sonst Division durch 0
-            /*
-            if(intval($r['angemeldete_teilnehmer']) != 0){
-              $sc = intval($r['anteil_sc'])/intval($r['angemeldete_teilnehmer'])*100;
-              $nsc = (intval($r['angemeldete_teilnehmer'])-intval($r['anteil_sc']))/intval($r['angemeldete_teilnehmer'])*100;
+            
+            if(intval($r['angemeldet_sc']) != 0){
+              $sc = intval($r['angemeldet_sc'])/intval($r['teilnehmer_sc'])*100;
             }
-             */
 
             if(intval($r['angemeldet_nsc']) >= 0){
                 $nsc = intval($r['angemeldet_nsc'])/intval($r['teilnehmer_nsc'])*100;
