@@ -67,8 +67,8 @@ class Welcome extends CI_Controller {
 
 
  $this->load->library('email');
-							   $this->email->from('noreply@runenwald.de', 'Runenwald Orga');
-							   $this->email->to('sebkoine@gmail.com');
+							   $this->email->from('sebkoine@gmail.com', 'Runenwald Orga');
+							   $this->email->to('markus93.weller@gmail.com');
 							   $this->email->subject('Email Test');
 							   $this->email->message('Testing the email class.');
 							   $this->email->send();
