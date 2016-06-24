@@ -70,6 +70,7 @@ class Welcome extends CI_Controller {
 							   $this->email->from('noreply@runenwald.de', 'Runenwald Orga');
 							   $this->email->to('markus93.weller@gmail.com');
 							   $this->email->subject('Anmeldungsbestätigung');
+							   $this->email->mailtype('html');
 							   $this->email->message('<h3>Hallo [Vorname],</h3>
 
 															  <p>hiermit bestätigen wir Deine Anmeldung zu unserer Veranstaltung <b>[Veranstaltungsname]</b> am <b>[Veranstaltungsdatum]</b> als <i>[SC/NSC]</i> und bitten Dich, den Betrag von <b>[aktueller Staffelpreis]</b> schnellstmöglich auf folgendes Konto zu überweisen:

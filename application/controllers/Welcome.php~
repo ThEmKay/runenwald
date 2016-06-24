@@ -67,10 +67,28 @@ class Welcome extends CI_Controller {
 
 
  		$this->load->library('email');
-							   $this->email->from('sebkoine@gmail.com', 'Runenwald Orga');
+							   $this->email->from('noreply@runenwald.de', 'Runenwald Orga');
 							   $this->email->to('markus93.weller@gmail.com');
-							   $this->email->subject('Email Test');
-							   $this->email->message('Testing the email class.');
+							   $this->email->subject('Anmeldungsbestätigung');
+							   $this->email->message('<h3>Hallo [Vorname],</h3>
+
+															  <p>hiermit bestätigen wir Deine Anmeldung zu unserer Veranstaltung <b>[Veranstaltungsname]</b> am <b>[Veranstaltungsdatum]</b> als <i>[SC/NSC]</i> und bitten Dich, den Betrag von <b>[aktueller Staffelpreis]</b> schnellstmöglich auf folgendes Konto zu überweisen:
+															  </p>
+
+															  <p>Inhaber: Karina Bley</p>
+															  <p>Kontonummer: 1050069010</p>
+															  <p>BLZ: 12030000</p>
+															  <p>Deutsche Kreditbank AG</p>
+ 															  <p>IBAN: DE79 120300001050069010</p>
+															  <p>BIC: BYLADEM1001</p>
+															  <br />
+															  <p>Du wirst noch einmal von uns informiert, sobald dein Geld eingetroffen ist.</p>
+															  <br />
+															  <br />
+															  <br />
+															  <p>Viele Grüße</p>
+															  <br />
+															  <p>Die Runenwald-Orga</p>');
 							   $this->email->send();
 
 
