@@ -155,7 +155,7 @@ class Welcome extends CI_Controller {
 							   $this->email->message('<h3>Hallo '.$this->input->post('name').',</h3>
 
 															  <p>hiermit bestätigen wir Deine Anmeldung zu unserer Veranstaltung <b>'. $r['titel'].'</b> am
-															  		<b>'.date('d.m.Y', mysql_to_unix($r['start_datum'])),.'</b> als <i>'.$isSC == 1 ? 'SC' : 'NSC'.'</i> und bitten Dich, den Betrag von <b>100000 &euro;</b> schnellstmöglich auf folgendes Konto zu überweisen:
+															  		<b>'.date('d.m.Y', mysql_to_unix($r['start_datum'])).'</b> als <i>'.$isSC == 1 ? 'SC' : 'NSC'.'</i> und bitten Dich, den Betrag von <b>100000 &euro;</b> schnellstmöglich auf folgendes Konto zu überweisen:
 															  </p>
 
 															  <p>Inhaber: Karina Bley</p>
