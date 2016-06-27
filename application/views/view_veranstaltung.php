@@ -3,7 +3,7 @@
     {titel}
    </h3>
    <p>
-      <b>{angemeldet_sc}</b> von max. <b>{teilnehmer_sc}</b> Spieler-Charaktere angemeldet.
+      <b>{angemeldet_sc}</b> von max. <b>{teilnehmer_sc}</b> Spieler-Charakteren angemeldet.
    </p>
     <div class="progress" style="background-color:#D3D3D3">
       <div class="progress-bar progress-bar-warning" role="progressbar" style="width:{anteil_sc}%;">
@@ -36,7 +36,7 @@
 	</table>
       </li>
       <li style="margin-bottom:5px">
-		Con-Zahler Zuschlag: <b>{con-zahler}&euro;</b>      
+		Con-Zahler Zuschlag: <b>{con_zahler}&euro;</b>      
       </li>
       <li style="margin-bottom:5px">
         <span class="glyphicon glyphicon-calendar"></span> {start_datum}
