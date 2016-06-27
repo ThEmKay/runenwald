@@ -236,10 +236,13 @@ class Welcome extends CI_Controller {
             <p>
               <b>Erfolg!</b> Du bist jetzt zur Veranstaltung <i>\''.$r['titel'].'\'</i> angemeldet. Danke f&uuml;r dein Vertrauen und viel Spa&szlig;!
             </p>
-            <p>
-              In wenigen Minuten erh&auml;lst du von uns eine E-Mail mit weiteren Informationen. <b>BITTE SIEH AUCH IN DEINEM
-              SPAM-ORDNER NACH</b>
-            </p>
+				<p>Bitte &uuml;berweise den aktuellen Staffelpreis auf das folgende Konto: <b>ACHTUNG, die Höhe des Staffelpreises richtet sich nach dem Datum des Geldeingangs. Eventuell musst du etwas nachbezahlen!</b></p>
+			   <p>Inhaber: Karina Bley</p>
+				<p>Kontonummer: 1050069010</p>
+				<p>BLZ: 12030000</p>
+				<p>Deutsche Kreditbank AG</p>
+ 				<p>IBAN: DE79 120300001050069010</p>
+				<p>BIC: BYLADEM1001</p>
           </div>
           <a href="'.site_url().'"><button class="btn-link">Noch jemanden anmelden</button></a>';
     }
