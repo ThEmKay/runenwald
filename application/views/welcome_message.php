@@ -12,7 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
   <!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
   <script type="text/javascript">
-  	  window.cookieconsent_options = {"message":"Diese Webseite verwendet Cookies.  Wenn Du in den Einstellungen Deines Webbrowsers Cookies zugelassen hast und diese Website weiterhin benutzt, heißt das für uns, dass Du mit der Verwendung von Cookies einverstanden bist.","dismiss":"Verstanden!","learnMore":"Weitere Informationen","link":null,"theme":"dark-top"};
+  	  window.cookieconsent_options = {"message":"Diese Webseite verwendet Cookies. Wenn Du in den Einstellungen Deines Webbrowsers Cookies zugelassen hast und diese Webseite weiterhin benutzt, bist Du mit der Verwendung von Cookies einverstanden.","dismiss":"Okay!","learnMore":"Weitere Informationen","link":null,"theme":"dark-top"};
   </script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.10/cookieconsent.min.js"></script>
   <!-- End Cookie Consent plugin -->  
