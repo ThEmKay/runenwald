@@ -174,7 +174,7 @@ class Welcome extends CI_Controller {
 															  <p>Viele Grüße</p>
 															  <br />
 															  <p>Die Runenwald-Orga</p>');
-							   $this->email->send();
+							  //$this->email->send();
 
 
 

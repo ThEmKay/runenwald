@@ -50,7 +50,7 @@
     </div>         
     <div class="checkbox">
         <label>
-            <input type="checkbox" name="agb"> <a href="./bilder/AGB-Runenwald-2016.pdf" target="_blank">AGBs gelesen</a> und akzeptiert *
+            <input type="checkbox" name="agb"> <a href="./bilder/AGB-Runenwald-2018.pdf" target="_blank">AGBs gelesen</a> und akzeptiert *
         </label>
     </div>
     <div class="form-group">
